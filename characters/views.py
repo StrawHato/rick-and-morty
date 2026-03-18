@@ -3,7 +3,7 @@ from random import choice
 from django.db.models import QuerySet
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
-from rest_framework import status, generics
+from rest_framework import status, generics, pagination
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -25,8 +25,15 @@ def get_random_character_view(request: Request) -> Response:
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class CharacterListPagination(pagination.PageNumberPagination):
+    page_size = 10
+    page_size_query_param = "page_size"
+    max_page_size = 100
+
+
 class CharacterListView(generics.ListAPIView):
     serializer_class = CharacterSerializer
+    pagination_class = CharacterListPagination
 
     def get_queryset(self) -> QuerySet:
         queryset = Character.objects.all()
