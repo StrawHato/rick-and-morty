@@ -12,9 +12,7 @@ from characters.models import Character
 from characters.serializers import CharacterSerializer
 
 
-@extend_schema(
-    responses={status.HTTP_200_OK: CharacterSerializer}
-)
+@extend_schema(responses={status.HTTP_200_OK: CharacterSerializer})
 @api_view(["GET"])
 def get_random_character_view(request: Request) -> Response:
     """Get a random character from Rick & Morty world!"""
@@ -50,7 +48,7 @@ class CharacterListView(generics.ListAPIView):
                 name="name",
                 description="Filter by name insensitive contains",
                 type=OpenApiTypes.STR,
-                required=False
+                required=False,
             )
         ]
     )

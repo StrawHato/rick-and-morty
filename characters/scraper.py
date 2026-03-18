@@ -7,7 +7,6 @@ from httpx import AsyncClient
 
 from characters.models import Character
 
-
 GRAPHQL_QUERY = """
 query {
   characters(page: %s) {
